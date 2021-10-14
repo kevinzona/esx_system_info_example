@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> ESXi Report </title>
+</head>
+<body>
+<center>
+<h1>Ansible ESXi Report</h1>
+</center>
+<table border = "1" cellpadding = "5" cellspacing = "5">
+    <thead>
+        <tr>
+            <th>Hostname</th>
+            <th>Product Name</th>
+            <th>Product Version</th>
+            <th>Build Number</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for esxi_host in esxi_about_info.results %}
+        <tr>
+            <td>{{  esxi_host.invocation.module_args.hostname | default('') }}</td>
+            <td>{{  esxi_host.about_info.product_name | default('') }}</td>
+            <td>{{  esxi_host.about_info.version | default('') }}</td>
+            <td>{{  esxi_host.about_info.build | default('') }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
