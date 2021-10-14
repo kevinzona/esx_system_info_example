@@ -1,3 +1,4 @@
+---
 - name: Get Information From ESXi
   hosts: localhost
   connection: local
