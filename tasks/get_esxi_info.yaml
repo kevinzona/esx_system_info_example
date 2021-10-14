@@ -15,17 +15,15 @@
       validate_certs: False
     delegate_to: localhost
     register: esxi_about_info
-    with_items:
-      - esx-01.lab.kjz.dev
-      - esx-02.lab.kjz.dev
+    with_items: "{{ esxi_hosts }}"
 
   - name: Send Report via E-mail
     community.general.mail:
       host: "{{ EMAIL_HOST }}"
       username: "{{ EMAIL_USERNAME }}"
       password: "{{ EMAIL_PASSWORD }}"
-      port: "{{ EMAIL_PORT }}"
-      subject: "ESXi Report"
+      port: "{{ EMAIL_PORT | default('465') }}"
+      subject: "{{ EMAIL_SUBJECT | default('ESXi report') }}"
       body: "{{ lookup('template', 'esxi_report.j2') }}"
       from: "{{ EMAIL_FROM }}"
       to: "{{ EMAIL_TO }}"
